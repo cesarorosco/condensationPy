@@ -9,3 +9,5 @@ http://www.morethantechnical.com/2011/06/17/simple-kalman-filter-for-tracking-us
 
 For an introduction to particle filters read these before:
 http://www.anuncommonlab.com/articles/how-kalman-filters-work/
+
+Updated to Python 3 / OpenCV 3.1 compatibility - Toby Breckon (November 2016)

@@ -239,7 +239,7 @@ if (((len(sys.argv) == 2) and (cap.open(str(sys.argv[1]))))
                 # observation and sample hypothesis)
 
                 # this could/should be updated to a relevant motion model for
-                # the scenario in use
+                # the scenario in use; see also Condensation.py object code
 
                 tracker.flConfidence[h] = 1.0/(np.sqrt(np.power(diffX,2) + \
                                           np.power(diffY,2)))
@@ -262,7 +262,7 @@ if (((len(sys.argv) == 2) and (cap.open(str(sys.argv[1]))))
 
             frame = cv2.rectangle(frame, (prediction[0]-int(0.5*w),prediction[1]-int(0.5*h)), (prediction[0]+int(0.5*w),prediction[1]+int(0.5*h)), (0,255,0),2);
 
-            # draw all the tracker hypothesis amples on the image
+            # draw all the tracker hypothesis samples on the image
 
             for j in range(len(tracker.flSamples)):
                 posNew = [int(s) for s in tracker.flSamples[j]]

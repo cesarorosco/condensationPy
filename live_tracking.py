@@ -97,8 +97,8 @@ windowNameSelection = "initial selected region";
 
 # init Condensation object
 
-dimensions = 2
-nParticles = 100
+dimensions = 2          # number of parameters for tracking
+nParticles = 100        # number of particles to use
 xRange = 640.0          # image width
 yRange = 480.0          # image hieght
 LB = [0.0, 0.0]         # lower bounds on sampling

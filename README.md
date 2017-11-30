@@ -1,6 +1,6 @@
 # condensationPy - Condensation Tracking in Python
 
-Condensation algorithm in Python Version based on the original OpenCV code
+Condensation Tracking algorithm in Python - a version based on the original OpenCV code
 
 ### Background
 

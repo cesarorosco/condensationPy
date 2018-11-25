@@ -18,14 +18,21 @@ import cv2
 import sys
 import math
 import numpy as np
+import argparse
 import Condensation as cons
 
 #####################################################################
 
 keep_processing = True;
-camera_to_use = 1; # 0 if you have one camera, 1 or > 1 otherwise
 
 selection_in_progress = False; # support interactive region selection
+
+# parse command line arguments for camera ID or video file
+
+parser = argparse.ArgumentParser(description='Perform Condensation (particle filter) tracking on an incoming camera image')
+parser.add_argument("-c", "--camera_to_use", type=int, help="specify camera to use", default=0)
+parser.add_argument('video_file', metavar='video_file', type=str, nargs='?', help='specify optional video file')
+args = parser.parse_args()
 
 #####################################################################
 
@@ -110,8 +117,8 @@ tracker.DynamMatr = [[1.0, 0.0],[0.0, 1.0]]
 # if command line arguments are provided try to read video_name
 # otherwise default to capture from attached H/W camera
 
-if (((len(sys.argv) == 2) and (cap.open(str(sys.argv[1]))))
-    or (cap.open(camera_to_use))):
+if (((args.video_file) and (cap.open(str(args.video_file))))
+    or (cap.open(args.camera_to_use))):
 
     # create window by name (note flags for resizable or not)
 

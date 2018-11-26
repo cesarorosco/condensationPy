@@ -262,13 +262,6 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
             predictionF = tracker.State;
             prediction = [int(s) for s in predictionF]
 
-            # print((prediction[0]-int(0.5*w),prediction[1]-int(0.5*h)), (prediction[0]+int(0.5*w),prediction[1]+int(0.5*h)));
-            # print((x,y), (x+w,y+h))
-            # print(prediction[0]-(0.5*w));
-
-            # TODO - there is some bug with the box size of the prediction being
-            # smaller than the actual observation
-
             # draw predicton on image
 
             frame = cv2.rectangle(frame, (prediction[0]-int(0.5*w),prediction[1]-int(0.5*h)), (prediction[0]+int(0.5*w),prediction[1]+int(0.5*h)), (0,255,0),2);

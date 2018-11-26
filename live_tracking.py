@@ -144,7 +144,7 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
     cropped = False;
 
     print("\nObservation in image: BLUE");
-    print("Prediction from Kalman: GREEN\n");
+    print("Prediction from Condensation Tracker: GREEN\n");
 
     # Setup the termination criteria for search, either 10 iteration or
     # move by at least 1 pixel pos. difference

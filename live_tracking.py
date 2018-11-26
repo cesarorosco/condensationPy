@@ -70,7 +70,7 @@ def center(points):
     x = np.float32((points[0][0] + points[1][0] + points[2][0] + points[3][0]) / 4.0)
     y = np.float32((points[0][1] + points[1][1] + points[2][1] + points[3][1]) / 4.0)
     return np.array([np.float32(x), np.float32(y)], np.float32)
-    
+
 #####################################################################
 
 # this function is called as a call-back everytime the trackbar is moved
@@ -237,12 +237,12 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
 
             # use to update Condensation tracker
 
-            for h in range(tracker.SamplesNum):
+            for hypothesis in range(tracker.SamplesNum):
 
                 # calculate the confidence based on the observations
 
-                diffX = (pts[0] - tracker.flSamples[h][0]) / xRange;
-                diffY = (pts[1] - tracker.flSamples[h][1]) / yRange;
+                diffX = (pts[0] - tracker.flSamples[hypothesis][0]) / xRange;
+                diffY = (pts[1] - tracker.flSamples[hypothesis][1]) / yRange;
 
                 # calculate a confidence / probabilty based on this observation
                 # and our motion model - here we assume motion in any direction
@@ -252,8 +252,8 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
                 # this could/should be updated to a relevant motion model for
                 # the scenario in use; see also Condensation.py object code
 
-                tracker.flConfidence[h] = 1.0/(np.sqrt(np.power(diffX,2) + \
-                                          np.power(diffY,2)))
+                tracker.flConfidence[hypothesis] = 1.0/(np.sqrt(np.power(diffX,2) + \
+                                                    np.power(diffY,2)))
 
             tracker.cvConDensUpdateByTime();
 

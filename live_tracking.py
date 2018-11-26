@@ -26,6 +26,7 @@ import Condensation as cons
 keep_processing = True;
 
 selection_in_progress = False; # support interactive region selection
+fullscreen = False; # run in fullscreen mode
 
 # parse command line arguments for camera ID or video file
 
@@ -292,6 +293,7 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
         # display image
 
         cv2.imshow(windowName,frame);
+        cv2.setWindowProperty(windowName, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN & fullscreen);
 
         # stop the timer and convert to ms. (to see how long processing and display takes)
 
@@ -312,10 +314,12 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
 
         # It can also be set to detect specific key strokes by recording which key is pressed
 
-        # e.g. if user presses "x" then exit
+        # e.g. if user presses "x" then exit / press "f" for fullscreen display
 
         if (key == ord('x')):
             keep_processing = False;
+        elif (key == ord('f')):
+            fullscreen = not(fullscreen);
 
     # close all windows
 

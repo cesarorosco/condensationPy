@@ -67,10 +67,10 @@ def on_mouse(event, x, y, flags, params):
 # return centre of a set of points representing a rectangle
 
 def center(points):
-    x = (points[0][0] + points[1][0] + points[2][0] + points[3][0]) / 4.0
-    y = (points[0][1] + points[1][1] + points[2][1] + points[3][1]) / 4.0
+    x = np.float32((points[0][0] + points[1][0] + points[2][0] + points[3][0]) / 4.0)
+    y = np.float32((points[0][1] + points[1][1] + points[2][1] + points[3][1]) / 4.0)
     return np.array([np.float32(x), np.float32(y)], np.float32)
-
+    
 #####################################################################
 
 # this function is called as a call-back everytime the trackbar is moved
@@ -142,6 +142,9 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
 
     cv2.setMouseCallback(windowName, on_mouse, 0);
     cropped = False;
+
+    print("\nObservation in image: BLUE");
+    print("Prediction from Kalman: GREEN\n");
 
     # Setup the termination criteria for search, either 10 iteration or
     # move by at least 1 pixel pos. difference

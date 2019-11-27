@@ -32,6 +32,7 @@ fullscreen = False; # run in fullscreen mode
 
 parser = argparse.ArgumentParser(description='Perform Condensation (particle filter) tracking on an incoming camera image')
 parser.add_argument("-c", "--camera_to_use", type=int, help="specify camera to use", default=0)
+parser.add_argument("-r", "--rescale", type=float, help="rescale image by this factor", default=1.0)
 parser.add_argument('video_file', metavar='video_file', type=str, nargs='?', help='specify optional video file')
 args = parser.parse_args()
 
@@ -156,6 +157,10 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
 
         if (cap.isOpened):
             ret, frame = cap.read();
+
+        # rescale if specified
+        if (args.rescale != 1.0):
+            frame = cv2.resize(frame, (0, 0), fx=args.rescale, fy=args.rescale)
 
         # start a timer (to see how long processing and display takes)
 

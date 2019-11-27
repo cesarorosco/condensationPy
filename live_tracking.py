@@ -93,10 +93,26 @@ def drawCross(img, center, color, d):
     cv2.line(img, (center[0] + d, center[1] - d), \
              (center[0]- d, center[1] + d), color, 2, cv2.LINE_AA, 0)
 
-#####################################################################
+################################################################################
+
 # define video capture object
 
-cap = cv2.VideoCapture();
+try:
+    # to use a non-buffered camera stream (via a separate thread)
+
+    if not(args.video_file):
+        import camera_stream
+        cap = camera_stream.CameraVideoStream()
+    else:
+        cap = cv2.VideoCapture() # not needed for video files
+
+except:
+    # if not then just use OpenCV default
+
+    print("INFO: camera_stream class not found - camera input may be buffered")
+    cap = cv2.VideoCapture()
+
+################################################################################
 
 # define display window name
 

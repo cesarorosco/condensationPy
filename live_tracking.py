@@ -142,7 +142,7 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
     # init Condensation object
 
     dimensions = 2          # number of parameters for tracking
-    nParticles = 100        # number of particles to use
+    nParticles = 200        # number of particles to use
     xRange = width          # image width
     yRange = height         # image hieght
     LB = [0.0, 0.0]         # lower bounds on sampling

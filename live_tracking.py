@@ -120,18 +120,6 @@ windowName = "Condensation Tracking"; # window name
 windowName2 = "Hue histogram back projection"; # window name
 windowNameSelection = "initial selected region";
 
-# init Condensation object
-
-dimensions = 2          # number of parameters for tracking
-nParticles = 100        # number of particles to use
-xRange = 640.0          # image width
-yRange = 480.0          # image hieght
-LB = [0.0, 0.0]         # lower bounds on sampling
-UB = [xRange, yRange]   # upper bounds on sampling
-tracker = cons.Condensation(dimensions, dimensions, nParticles)
-tracker.cvConDensInitSampleSet(LB, UB)
-tracker.DynamMatr = [[1.0, 0.0],[0.0, 1.0]]
-
 # if command line arguments are provided try to read video_name
 # otherwise default to capture from attached H/W camera
 
@@ -143,6 +131,25 @@ if (((args.video_file) and (cap.open(str(args.video_file))))
     cv2.namedWindow(windowName, cv2.WINDOW_NORMAL);
     cv2.namedWindow(windowName2, cv2.WINDOW_NORMAL);
     cv2.namedWindow(windowNameSelection, cv2.WINDOW_NORMAL);
+
+    # get image resize
+
+    if (cap.isOpened):
+        ret, frame = cap.read();
+        frame = cv2.resize(frame, (0, 0), fx=args.rescale, fy=args.rescale)
+        height, width = frame.shape[:2]
+
+    # init Condensation object
+
+    dimensions = 2          # number of parameters for tracking
+    nParticles = 100        # number of particles to use
+    xRange = width          # image width
+    yRange = height         # image hieght
+    LB = [0.0, 0.0]         # lower bounds on sampling
+    UB = [xRange, yRange]   # upper bounds on sampling
+    tracker = cons.Condensation(dimensions, dimensions, nParticles)
+    tracker.cvConDensInitSampleSet(LB, UB)
+    tracker.DynamMatr = [[1.0, 0.0],[0.0, 1.0]]
 
     # set sliders for HSV selection thresholds
 

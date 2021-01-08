@@ -114,9 +114,9 @@ class MouseGUI():
         #On error change cv2.CV_AA for cv2.LINE_AA
         # (for differents versions of OpenCV)
         cv2.line(img, (center[0] - d, center[1] - d), \
-                 (center[0] + d, center[1] + d), color, 2, cv2.CV_AA, 0)
+                 (center[0] + d, center[1] + d), color, 2, cv2.LINE_AA, 0)
         cv2.line(img, (center[0] + d, center[1] - d), \
-                 (center[0]- d, center[1] + d), color, 2, cv2.CV_AA, 0)
+                 (center[0]- d, center[1] + d), color, 2, cv2.LINE_AA, 0)
         
     def update_after_iterating(self, img):
 
@@ -135,9 +135,9 @@ class MouseGUI():
             cv2.line(img, p1, p2, (255,255,255), 1)
 
         sizeVec = len(self.mouseV) - 1
-        print "Mean: %d %d" % (meanInt[0], meanInt[1])
-        print "Real: %d %d" % (self.mouseV[sizeVec][0], self.mouseV[sizeVec][1])
-        print '+++++++++++++++'
+        print("Mean: %d %d" % (meanInt[0], meanInt[1]))
+        print("Real: %d %d" % (self.mouseV[sizeVec][0], self.mouseV[sizeVec][1]))
+        print('+++++++++++++++')
         self.drawCross(img, meanInt, (255, 0, 255), 2)
 
 if __name__ == "__main__":

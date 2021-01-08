@@ -66,7 +66,7 @@ class Condensation():
     # Parameters:
     #   DP         - dimension of the dynamical vector
     #   MP         - dimension of the measurement vector
-    #   SamplesNum - number of samples in sample set used in algorithm 
+    #   SamplesNum - number of samples in sample set used in algorithm
     def __init__(self, dimDP, dimMP, samplesNum):
 
         if(dimDP < 0 or dimMP < 0 or samplesNum < 0):
@@ -83,7 +83,7 @@ class Condensation():
         self.State = np.zeros(self.DP, dtype=float)
         self.lowBound=np.empty(self.DP, dtype=float)
         self.uppBound=np.empty(self.DP, dtype=float)
-        
+
 
     # Name: cvConDensInitSampleSet
     # Initializing for the Condensation algorithm
@@ -126,7 +126,7 @@ class Condensation():
             self.Temp = np.add(self.Temp, self.State)
             valSum += self.flConfidence[i]
             self.flCumulative[i] = valSum
-            
+
         #Taking the new vector from transformation of mean by dynamics matrix
         self.Temp = np.multiply(self.Temp, (1.0/valSum))
         for i in range(self.DP):
@@ -150,6 +150,9 @@ class Condensation():
             upperBound[j] = (self.uppBound[j] - self.lowBound[j])/5.0
 
         #Adding the random-generated vector to every vector in sample set
+
+        # which assumes a moiton model of equal likely motion in all directions
+
         RandomSample = np.empty(self.DP, dtype=float)
         for i in range(self.SamplesNum):
             for j in range(self.DP):
@@ -157,7 +160,5 @@ class Condensation():
                                                     upperBound[j])
                 self.flSamples[i][j] = np.sum(np.multiply(self.DynamMatr[j],
                                                self.flNewSamples[i][j]))
-                
-            self.flSamples[i] = np.add(self.flSamples[i], RandomSample)            
 
-
+            self.flSamples[i] = np.add(self.flSamples[i], RandomSample)

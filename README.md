@@ -17,7 +17,7 @@ http://www.anuncommonlab.com/articles/how-kalman-filters-work/
 
 - _Condensation.py_: main tracking object for Condensation approach
 - _live_\__tracking.py_: live tracking of objects from webcam
-- _mouseCondensation.py_: tracking of mouse pointer (original)
+- _camera_stream.py_: threaded camera capture interface
 
 ---
 

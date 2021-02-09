@@ -59,6 +59,8 @@ import numpy as np
 # a = (PositionX - sample[i][0])/650
 # b = (PositionY - sample[i][1])/650
 # flConfidence[i]=1.0/(sqrt(a*a + b*b))
+
+
 class Condensation():
 
     # Name: __init__
@@ -75,15 +77,14 @@ class Condensation():
         self.SamplesNum = samplesNum
         self.DP = dimDP
         self.MP = dimMP
-        self.flSamples =[]
+        self.flSamples = []
         self.flNewSamples = np.empty([self.SamplesNum, self.DP], dtype=float)
         self.flConfidence = []
         self.flCumulative = np.zeros(self.SamplesNum, dtype=float)
         self.DynamMatr = []
         self.State = np.zeros(self.DP, dtype=float)
-        self.lowBound=np.empty(self.DP, dtype=float)
-        self.uppBound=np.empty(self.DP, dtype=float)
-
+        self.lowBound = np.empty(self.DP, dtype=float)
+        self.uppBound = np.empty(self.DP, dtype=float)
 
     # Name: cvConDensInitSampleSet
     # Initializing for the Condensation algorithm
@@ -94,8 +95,9 @@ class Condensation():
     #   upperBound  - vector of upper bounds used to random update
     #                   of sample set
     #
+
     def cvConDensInitSampleSet(self, lowerBound, upperBound):
-        prob = 1.0/self.SamplesNum
+        prob = 1.0 / self.SamplesNum
 
         if((lowerBound is None) or (upperBound is None)):
             raise ValueError("Lower/Upper Bound")
@@ -108,7 +110,7 @@ class Condensation():
             valTmp = np.zeros(self.DP, dtype=float)
             for i in range(self.DP):
                 valTmp[i] = np.random \
-                    .uniform(lowerBound[i],upperBound[i])
+                    .uniform(lowerBound[i], upperBound[i])
             self.flSamples.append(valTmp)
             self.flConfidence.append(prob)
 
@@ -116,40 +118,40 @@ class Condensation():
     # Performing Time Update routine for ConDensation algorithm
     # Parameters:
     def cvConDensUpdateByTime(self):
-        valSum  = 0
-        #Sets Temp To Zero
+        valSum = 0
+        # Sets Temp To Zero
         self.Temp = np.zeros(self.DP, dtype=float)
 
-        #Calculating the Mean
+        # Calculating the Mean
         for i in range(self.SamplesNum):
             self.State = np.multiply(self.flSamples[i], self.flConfidence[i])
             self.Temp = np.add(self.Temp, self.State)
             valSum += self.flConfidence[i]
             self.flCumulative[i] = valSum
 
-        #Taking the new vector from transformation of mean by dynamics matrix
-        self.Temp = np.multiply(self.Temp, (1.0/valSum))
+        # Taking the new vector from transformation of mean by dynamics matrix
+        self.Temp = np.multiply(self.Temp, (1.0 / valSum))
         for i in range(self.DP):
             self.State[i] = np.sum(np.multiply(self.DynamMatr[i],
                                                self.Temp[i]))
 
         valSum = valSum / float(self.SamplesNum)
 
-        #Updating the set of random samples
+        # Updating the set of random samples
         for i in range(self.SamplesNum):
             j = 0
-            while (self.flCumulative[j] <= float(i)*valSum and
-                j < self.SamplesNum -1):
+            while (self.flCumulative[j] <= float(i) * valSum and
+                   j < self.SamplesNum - 1):
                 j += 1
             self.flNewSamples[i] = self.flSamples[j]
 
         lowerBound = np.empty(self.DP, dtype=float)
         upperBound = np.empty(self.DP, dtype=float)
         for j in range(self.DP):
-            lowerBound[j] = (self.lowBound[j] - self.uppBound[j])/5.0
-            upperBound[j] = (self.uppBound[j] - self.lowBound[j])/5.0
+            lowerBound[j] = (self.lowBound[j] - self.uppBound[j]) / 5.0
+            upperBound[j] = (self.uppBound[j] - self.lowBound[j]) / 5.0
 
-        #Adding the random-generated vector to every vector in sample set
+        # Adding the random-generated vector to every vector in sample set
 
         # which assumes a moiton model of equal likely motion in all directions
 
@@ -159,6 +161,6 @@ class Condensation():
                 RandomSample[j] = np.random.uniform(lowerBound[j],
                                                     upperBound[j])
                 self.flSamples[i][j] = np.sum(np.multiply(self.DynamMatr[j],
-                                               self.flNewSamples[i][j]))
+                                                          self.flNewSamples[i][j]))
 
             self.flSamples[i] = np.add(self.flSamples[i], RandomSample)

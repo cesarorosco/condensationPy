@@ -1,53 +1,60 @@
-"""
+#####################################################################
 
-Based on the OpenCV Version of the Condensation Algorithm and the
-Android Version available here:
-https://android.googlesource.com/platform/external/opencv/+/android-5.1.1_r6/cv/src/cvcondens.cpp
+# Maintainer : Toby Breckon, toby.breckon@durham.ac.uk
 
-Read before:
-http://www.anuncommonlab.com/articles/how-kalman-filters-work/
+#####################################################################
 
-/*M///////////////////////////////////////////////////////////////////////////////////////
-//
-//  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
-//
-//  By downloading, copying, installing or using the software you agree to this license.
-//  If you do not agree to this license, do not download, install,
-//  copy or use the software.
-//
-//
-//                        Intel License Agreement
-//                For Open Source Computer Vision Library
-//
-// Copyright (C) 2000, Intel Corporation, all rights reserved.
-// Third party copyrights are property of their respective owners.
-//
-// Redistribution and use in source and binary forms, with or without modification,
-// are permitted provided that the following conditions are met:
-//
-//   * Redistribution's of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//
-//   * Redistribution's in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//
-//   * The name of Intel Corporation may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// This software is provided by the copyright holders and contributors "as is" and
-// any express or implied warranties, including, but not limited to, the implied
-// warranties of merchantability and fitness for a particular purpose are disclaimed.
-// In no event shall the Intel Corporation or contributors be liable for any direct,
-// indirect, incidental, special, exemplary, or consequential damages
-// (including, but not limited to, procurement of substitute goods or services;
-// loss of use, data, or profits; or business interruption) however caused
-// and on any theory of liability, whether in contract, strict liability,
-// or tort (including negligence or otherwise) arising in any way out of
-// the use of this software, even if advised of the possibility of such damage.
-//
-"""
+# Based on the OpenCV Version of the Condensation Algorithm and the
+# Android Version available here:
+# https://android.googlesource.com/platform/external/opencv/+/android-5.1.1_r6/cv/src/cvcondens.cpp
+
+# Read before:
+# http://www.anuncommonlab.com/articles/how-kalman-filters-work/
+
+#####################################################################
+#
+#  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+#
+#  By downloading, copying, installing or using the software you agree to this license.
+#  If you do not agree to this license, do not download, install,
+#  copy or use the software.
+#
+#
+#                        Intel License Agreement
+#                For Open Source Computer Vision Library
+#
+# Copyright (C) 2000, Intel Corporation, all rights reserved.
+# Third party copyrights are property of their respective owners.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+#   * Redistribution's of source code must retain the above copyright notice,
+#     this list of conditions and the following disclaimer.
+#
+#   * Redistribution's in binary form must reproduce the above copyright notice,
+#     this list of conditions and the following disclaimer in the documentation
+#     and/or other materials provided with the distribution.
+#
+#   * The name of Intel Corporation may not be used to endorse or promote products
+#     derived from this software without specific prior written permission.
+#
+# This software is provided by the copyright holders and contributors "as is" and
+# any express or implied warranties, including, but not limited to, the implied
+# warranties of merchantability and fitness for a particular purpose are disclaimed.
+# In no event shall the Intel Corporation or contributors be liable for any direct,
+# indirect, incidental, special, exemplary, or consequential damages
+# (including, but not limited to, procurement of substitute goods or services;
+# loss of use, data, or profits; or business interruption) however caused
+# and on any theory of liability, whether in contract, strict liability,
+# or tort (including negligence or otherwise) arising in any way out of
+# the use of this software, even if advised of the possibility of such damage.
+
+#####################################################################
+
 import numpy as np
+
+#####################################################################
 
 # Condensation Algorithm.
 # Python version based on the original OpenCv Version and the
@@ -60,6 +67,7 @@ import numpy as np
 # b = (PositionY - sample[i][1])/650
 # flConfidence[i]=1.0/(sqrt(a*a + b*b))
 
+#####################################################################
 
 class Condensation():
 
@@ -85,6 +93,8 @@ class Condensation():
         self.State = np.zeros(self.DP, dtype=float)
         self.lowBound = np.empty(self.DP, dtype=float)
         self.uppBound = np.empty(self.DP, dtype=float)
+
+    ###############################################################
 
     # Name: cvConDensInitSampleSet
     # Initializing for the Condensation algorithm
@@ -114,9 +124,13 @@ class Condensation():
             self.flSamples.append(valTmp)
             self.flConfidence.append(prob)
 
+    ###############################################################
+
+
     # Name:    cvConDensUpdateByTime
     # Performing Time Update routine for ConDensation algorithm
     # Parameters:
+
     def cvConDensUpdateByTime(self):
         valSum = 0
         # Sets Temp To Zero
@@ -152,7 +166,6 @@ class Condensation():
             upperBound[j] = (self.uppBound[j] - self.lowBound[j]) / 5.0
 
         # Adding the random-generated vector to every vector in sample set
-
         # which assumes a moiton model of equal likely motion in all directions
 
         RandomSample = np.empty(self.DP, dtype=float)
@@ -164,3 +177,5 @@ class Condensation():
                                                           self.flNewSamples[i][j]))
 
             self.flSamples[i] = np.add(self.flSamples[i], RandomSample)
+
+#####################################################################

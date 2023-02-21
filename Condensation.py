@@ -71,7 +71,7 @@ class Condensation():
     #   SamplesNum - number of samples in sample set used in algorithm
     def __init__(self, dimDP, dimMP, samplesNum):
 
-        if(dimDP < 0 or dimMP < 0 or samplesNum < 0):
+        if (dimDP < 0 or dimMP < 0 or samplesNum < 0):
             raise ValueError("Parameters out of range")
 
         self.SamplesNum = samplesNum
@@ -99,7 +99,7 @@ class Condensation():
     def cvConDensInitSampleSet(self, lowerBound, upperBound):
         prob = 1.0 / self.SamplesNum
 
-        if((lowerBound is None) or (upperBound is None)):
+        if ((lowerBound is None) or (upperBound is None)):
             raise ValueError("Lower/Upper Bound")
 
         self.lowBound = lowerBound
